@@ -32,24 +32,9 @@
 
 .chips {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
-  overflow-x: auto;
-  padding: 4px 2px 8px;
-  scrollbar-width: thin;
-}
-
-.chips::-webkit-scrollbar {
-  height: 6px;
-}
-
-.chips::-webkit-scrollbar-track {
-  background: var(--bg);
-  border-radius: 3px;
-}
-
-.chips::-webkit-scrollbar-thumb {
-  background: var(--muted);
-  border-radius: 3px;
+  padding-top: 4px;
 }
 
 .chip {
