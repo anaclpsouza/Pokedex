@@ -53,7 +53,6 @@ class PokeApiClient {
     };
   }
 
-
   extractFlavorText(species) {
     if (!species?.flavor_text_entries) return 'No description available.';
     const entry = species.flavor_text_entries.find(e => e.language?.name === 'en');

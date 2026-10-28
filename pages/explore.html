@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Pokédex — Explore Pokémon</title>
+    <meta name="description" content="Explore and filter Pokémon by region, type, or name in the retro Pokédex grid.">
+    <link rel="icon" href="../assets/pokeball.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://pokeapi.co">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/explore.css">
+</head>
+
+<body>
+
+    <div class="app">
+        <header class="topbar">
+            <a class="brand" href="../index.html" aria-label="Retro Pokédex - home">
+                <img src="../assets/pokeball.svg" alt="" class="brand__ball" width="42" height="42">
+                <span class="brand__title">POKÉDEX<small>RETRO</small></span>
+            </a>
+
+            <nav class="tabs" role="tablist" aria-label="Sections">
+                <a class="tab" id="tab-dex" href="../index.html" role="tab" aria-selected="false">POKÉDEX</a>
+                <a class="tab is-active" id="tab-explore" href="explore.html" role="tab"
+                    aria-selected="true">EXPLORE</a>
+            </nav>
+
+            <div class="topbar__tools">
+                <div class="team-wrap">
+                    <span class="team-label">PARTY</span>
+                    <div class="team" id="team" aria-label="My party"></div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- ================= EXPLORAR ================= -->
+            <section id="view-explore" class="view" role="tabpanel" aria-labelledby="tab-explore">
+                <div class="section-title">
+                    <h2>EXPLORE POKÉMON WORLD</h2>
+                    <p>Filter by region, type, or name. Click on any card to inspect in Pokédex!</p>
+                </div>
+
+                <div class="explore-bar card">
+                    <div class="explore-bar__row">
+                        <label class="field">
+                            <span>REGION</span>
+                            <select id="f-gen" class="select-retro">
+                                <option value="all">ALL REGIONS (1025)</option>
+                                <option value="1" selected>KANTO (GEN 1)</option>
+                                <option value="2">JOHTO (GEN 2)</option>
+                                <option value="3">HOENN (GEN 3)</option>
+                                <option value="4">SINNOH (GEN 4)</option>
+                                <option value="5">UNOVA (GEN 5)</option>
+                            </select>
+                        </label>
+                        <label class="field field--grow">
+                            <span>NAME</span>
+                            <input id="f-name" class="lcd-input" type="text" placeholder="FILTER BY NAME..."
+                                spellcheck="false">
+                        </label>
+                        <span class="explore-count" id="explore-count">—</span>
+                    </div>
+                    <div class="chips" id="f-types" aria-label="Filter by type">
+                        <button class="chip is-active" data-type="all">ALL</button>
+                        <button class="chip" data-type="grass">GRASS</button>
+                        <button class="chip" data-type="fire">FIRE</button>
+                        <button class="chip" data-type="water">WATER</button>
+                        <button class="chip" data-type="electric">ELECTRIC</button>
+                        <button class="chip" data-type="normal">NORMAL</button>
+                        <button class="chip" data-type="poison">POISON</button>
+                        <button class="chip" data-type="psychic">PSYCHIC</button>
+                        <button class="chip" data-type="ghost">GHOST</button>
+                        <button class="chip" data-type="dragon">DRAGON</button>
+                        <button class="chip" data-type="ice">ICE</button>
+                        <button class="chip" data-type="fighting">FIGHTING</button>
+                        <button class="chip" data-type="ground">GROUND</button>
+                        <button class="chip" data-type="rock">ROCK</button>
+                        <button class="chip" data-type="bug">BUG</button>
+                        <button class="chip" data-type="steel">STEEL</button>
+                        <button class="chip" data-type="fairy">FAIRY</button>
+                    </div>
+                </div>
+
+                <div class="grid" id="explore-grid"></div>
+
+                <div class="grid-status">
+                    <button class="btn-retro" id="explore-more">LOAD MORE POKÉMON</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/explore.js"></script>
+</body>
+
+</html>
