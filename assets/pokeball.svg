@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <radialGradient id="ball-top" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#ff4d63"/>
+      <stop offset="40%" stop-color="#dc0a2d"/>
+      <stop offset="100%" stop-color="#8f0019"/>
+    </radialGradient>
+    <radialGradient id="ball-bottom" cx="65%" cy="75%" r="65%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#e6e6e6"/>
+      <stop offset="100%" stop-color="#b0b0b0"/>
+    </radialGradient>
+    <radialGradient id="btn-glow" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="65%" stop-color="#dddddd"/>
+      <stop offset="100%" stop-color="#999999"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Contorno grosso preto externo -->
+  <circle cx="50" cy="50" r="48" fill="#111111"/>
+
+  <!-- Metade superior vermelha -->
+  <path d="M 6 50 A 44 44 0 0 1 94 50 Z" fill="url(#ball-top)"/>
+
+  <!-- Metade inferior branca -->
+  <path d="M 6 50 A 44 44 0 0 0 94 50 Z" fill="url(#ball-bottom)"/>
+
+  <!-- Faixa central preta -->
+  <rect x="6" y="45" width="88" height="10" fill="#111111"/>
+
+  <!-- Botão circular externo preto -->
+  <circle cx="50" cy="50" r="18" fill="#111111"/>
+
+  <!-- Botão interno prateado/branco -->
+  <circle cx="50" cy="50" r="12" fill="url(#btn-glow)"/>
+  <circle cx="50" cy="50" r="7" fill="none" stroke="#222222" stroke-width="1.5"/>
+</svg>
