@@ -4,9 +4,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   const chips = document.querySelectorAll('.chip');
   const grid = document.getElementById('explore-grid');
   const countEl = document.getElementById('explore-count');
+  const moreBtn = document.getElementById('explore-more');
 
+  const PAGE_SIZE = 24;
   let allPokemon = [];
   let filteredList = [];
+  let currentPage = 1;
   let selectedGen = fGen ? fGen.value : '1';
   let selectedType = 'all';
   let searchTerm = '';
@@ -34,13 +37,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     return card;
   }
 
-  // Carrega os tipos e define o gradiente no fundo do card
   async function loadCardDetails(card, id) {
     try {
       const data = await api.getPokemon(id);
       const primaryType = data.types[0].type.name;
 
-      // Aplica o gradiente no fundo
       card.classList.add(`card--${primaryType}`);
 
       const typesEl = card.querySelector('.poke-card__types');
@@ -50,11 +51,77 @@ document.addEventListener('DOMContentLoaded', async () => {
           .join('');
       }
     } catch {
-      // Mantém exibição padrão caso falhe
+      // Ignora falhas pontuais de conexão
+    }
+  }
+
+  function appendCardsBatch(batch) {
+    const fragment = document.createDocumentFragment();
+    const newCards = [];
+
+    batch.forEach((p) => {
+      const card = createCard(p);
+      fragment.appendChild(card);
+      newCards.push({ card, id: p.id });
+    });
+
+    grid.appendChild(fragment);
+
+    newCards.forEach(({ card, id }) => {
+      loadCardDetails(card, id);
+    });
+  }
+
+  function renderGrid() {
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    if (filteredList.length === 0) {
+      grid.innerHTML = '<p class="empty-msg">NENHUM POKÉMON ENCONTRADO</p>';
+      if (moreBtn) moreBtn.style.display = 'none';
+      if (countEl) countEl.textContent = '0 POKÉMON';
+      return;
+    }
+
+    const initialBatch = filteredList.slice(0, PAGE_SIZE);
+    appendCardsBatch(initialBatch);
+
+    if (moreBtn) {
+      if (filteredList.length > PAGE_SIZE) {
+        moreBtn.style.display = 'inline-block';
+        moreBtn.textContent = 'CARREGAR MAIS';
+      } else {
+        moreBtn.style.display = 'none';
+      }
+    }
+
+    if (countEl) {
+      countEl.textContent = `${initialBatch.length} DE ${filteredList.length} POKÉMON`;
+    }
+  }
+
+  function loadMorePokemon() {
+    const start = currentPage * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    const nextBatch = filteredList.slice(start, end);
+
+    if (nextBatch.length > 0) {
+      appendCardsBatch(nextBatch);
+      currentPage++;
+    }
+
+    const displayedCount = Math.min(end, filteredList.length);
+    if (countEl) {
+      countEl.textContent = `${displayedCount} DE ${filteredList.length} POKÉMON`;
+    }
+
+    if (end >= filteredList.length && moreBtn) {
+      moreBtn.style.display = 'none';
     }
   }
 
   async function applyFilters() {
+    currentPage = 1;
     let result = allPokemon;
 
     // Filtro por Região / Geração
@@ -65,7 +132,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
 
-    // Filtro por Nome ou Número 
+    // Filtro por Nome ou Número
     if (searchTerm) {
       result = result.filter((p) => p.name.includes(searchTerm) || String(p.id).includes(searchTerm));
     }
@@ -81,40 +148,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     filteredList = result;
-
-    if (countEl) {
-      countEl.textContent = `${filteredList.length} POKÉMON`;
-    }
-
     renderGrid();
   }
 
-  // Renderiza a lista de cards no grid
-  function renderGrid() {
-    if (!grid) return;
-    grid.innerHTML = '';
-
-    if (filteredList.length === 0) {
-      grid.innerHTML = '<p class="empty-msg">NENHUM POKÉMON ENCONTRADO</p>';
-      return;
-    }
-
-    const fragment = document.createDocumentFragment();
-    filteredList.forEach((p) => {
-      const card = createCard(p);
-      fragment.appendChild(card);
-    });
-    
-    grid.appendChild(fragment);
-
-    // Carrega tipos e cor do fundo de cada card
-    filteredList.forEach((p, index) => {
-      const card = grid.children[index];
-      if (card) loadCardDetails(card, p.id);
-    });
-  }
-
-  // Evento do Seletor de Região
   if (fGen) {
     fGen.addEventListener('change', () => {
       selectedGen = fGen.value;
@@ -122,7 +158,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Evento do Campo de Busca por Nome ou Número
   if (fName) {
     let timer;
     fName.addEventListener('input', () => {
@@ -134,7 +169,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Evento das Badges de Tipo
   chips.forEach((chip) => {
     chip.addEventListener('click', () => {
       chips.forEach((c) => c.classList.remove('is-active'));
@@ -144,7 +178,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   });
 
-  // Clique no card redireciona para a tela da Pokédex
+  if (moreBtn) {
+    moreBtn.addEventListener('click', loadMorePokemon);
+  }
+
   if (grid) {
     grid.addEventListener('click', (e) => {
       const card = e.target.closest('.poke-card');
@@ -154,7 +191,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Carregamento inicial da lista de Pokémon
   try {
     if (countEl) countEl.textContent = 'CARREGANDO...';
     allPokemon = await api.initIndex();
@@ -162,5 +198,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   } catch {
     if (countEl) countEl.textContent = 'OFFLINE';
     if (grid) grid.innerHTML = '<p class="empty-msg">NÃO FOI POSSÍVEL CONECTAR À POKÉAPI</p>';
+    if (moreBtn) moreBtn.style.display = 'none';
   }
 });
