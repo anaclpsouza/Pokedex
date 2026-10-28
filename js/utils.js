@@ -55,16 +55,3 @@ function formatHeight(decimeters) {
 function formatWeight(hectograms) {
   return `${((hectograms || 0) / 10).toFixed(1)} kg`;
 }
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    GENERATIONS,
-    TYPE_COLORS,
-    formatNumber,
-    padNumber: formatNumber,
-    formatName,
-    formatStatName,
-    formatHeight,
-    formatWeight
-  };
-}
