@@ -17,7 +17,7 @@
 <body>
 
   <!-- ================= TELA ENTRADA ================= -->
-  <div id="boot" class="boot" role="dialog" aria-label="Loading Pokédex">
+  <div id="boot" class="boot" role="dialog" aria-label="Loading Pokédex" hidden >
     <div class="boot__half boot__half--top"></div>
     <div class="boot__half boot__half--bottom"></div>
     <div class="boot__band"></div>
@@ -66,60 +66,20 @@
           <!-- LEFT HALF -->
           <div class="dex__left">
             <div class="dex__top">
-              <svg class="lens" id="lens" viewBox="0 0 84 84" role="img" aria-label="Optical sensor">
-                <defs>
-                  <radialGradient id="lens-optics" cx="35%" cy="32%" r="65%">
-                    <stop offset="0%" stop-color="#ffffff" />
-                    <stop offset="14%" stop-color="#99e5ff" />
-                    <stop offset="30%" stop-color="#29b6f6" />
-                    <stop offset="65%" stop-color="#0288d1" />
-                    <stop offset="90%" stop-color="#01579b" />
-                    <stop offset="100%" stop-color="#002f6c" />
-                  </radialGradient>
-                </defs>
-                <circle class="lens__ring" cx="42" cy="42" r="39" fill="#b8b8b8" stroke="#111" stroke-width="3"/>
-                <circle class="lens__glass" cx="42" cy="42" r="32" fill="url(#lens-optics)" stroke="#000" stroke-width="3"/>
-                <ellipse class="lens__shine" cx="32" cy="28" rx="10" ry="5.5" fill="rgba(255,255,255,0.75)" transform="rotate(-32 32 28)"/>
-                <circle cx="28" cy="24" r="2.5" fill="#ffffff"/>
-              </svg>
-              <svg class="leds" viewBox="0 0 80 24" aria-hidden="true">
-                <defs>
-                  <radialGradient id="led-red-grad" cx="35%" cy="35%" r="65%">
-                    <stop offset="0%" stop-color="#ffffff"/>
-                    <stop offset="25%" stop-color="#ff3b3b"/>
-                    <stop offset="100%" stop-color="#8c0000"/>
-                  </radialGradient>
-                  <radialGradient id="led-yellow-grad" cx="35%" cy="35%" r="65%">
-                    <stop offset="0%" stop-color="#ffffff"/>
-                    <stop offset="25%" stop-color="#ffd53d"/>
-                    <stop offset="100%" stop-color="#8c6f00"/>
-                  </radialGradient>
-                  <radialGradient id="led-green-grad" cx="35%" cy="35%" r="65%">
-                    <stop offset="0%" stop-color="#ffffff"/>
-                    <stop offset="25%" stop-color="#42ea5e"/>
-                    <stop offset="100%" stop-color="#146b24"/>
-                  </radialGradient>
-                </defs>
-                <circle class="led led--red" cx="12" cy="12" r="9" fill="url(#led-red-grad)" stroke="#000" stroke-width="2.5"/>
-                <circle class="led led--yellow" cx="40" cy="12" r="9" fill="url(#led-yellow-grad)" stroke="#000" stroke-width="2.5"/>
-                <circle class="led led--green" cx="68" cy="12" r="9" fill="url(#led-green-grad)" stroke="#000" stroke-width="2.5"/>
-              </svg>
+              <img class="lens" id="lens" src="assets/lens.svg" alt="Optical sensor" width="84" height="84">
+              <img class="leds" id="leds" src="assets/leds.svg" alt="Status LEDs" width="80" height="24">
             </div>
 
             <div class="screen-frame">
               <div class="screen-frame__dots" aria-hidden="true"><i></i><i></i></div>
               <div class="screen" id="dex-screen" data-scene="type">
-                <svg class="screen__sun" viewBox="0 0 100 100" aria-hidden="true">
-                  <circle cx="50" cy="50" r="45" fill="rgba(255,255,255,0.45)"/>
-                </svg>
-                <svg class="screen__platform" viewBox="0 0 200 60" aria-hidden="true">
-                  <ellipse cx="100" cy="30" rx="94" ry="24" fill="rgba(0,0,0,0.28)"/>
-                </svg>
+                <img class="screen__sun" src="assets/screen-sun.svg" alt="" aria-hidden="true">
+                <img class="screen__platform" src="assets/screen-platform.svg" alt="" aria-hidden="true">
 
                 <span class="screen__num" id="dex-num">#0000</span>
                 <div class="screen__badges" id="dex-badges"></div>
 
-                <img id="dex-sprite" class="screen__sprite pixel" alt="" title="Click to play cry">
+                <img id="dex-sprite" class="screen__sprite pixel" alt="Pokémon sprite">
 
                 <div class="screen__loader">
                   <img src="assets/pokeball.svg" alt="Loading..." class="spin" width="46" height="46">
@@ -127,23 +87,8 @@
 
                 <img src="assets/pokeball.svg" alt="" class="catch-ball" width="42" height="42">
 
-                <svg class="catch-stars" viewBox="0 0 160 80" aria-hidden="true">
-                  <path d="M30 20 L34 30 L44 30 L36 36 L39 46 L30 40 L21 46 L24 36 L16 30 L26 30 Z"/>
-                  <path d="M80 6 L84 16 L94 16 L86 22 L89 32 L80 26 L71 32 L74 22 L66 16 L76 16 Z"/>
-                  <path d="M130 20 L134 30 L144 30 L136 36 L139 46 L130 40 L121 46 L124 36 L116 30 L126 30 Z"/>
-                </svg>
-
-                <svg class="sparkles" viewBox="0 0 200 150" aria-hidden="true">
-                  <path d="M50 30 Q50 50 30 50 Q50 50 50 70 Q50 50 70 50 Q50 50 50 30 Z"/>
-                  <path d="M140 25 Q140 40 125 40 Q140 40 140 55 Q140 40 155 40 Q140 40 140 25 Z"/>
-                  <path d="M100 65 Q100 85 80 85 Q100 85 100 105 Q100 85 120 85 Q100 85 100 65 Z"/>
-                </svg>
-              </div>
-
-              <div class="screen-frame__bottom">
-                <button class="red-dot" id="btn-cry" aria-label="Play Pokémon cry" title="Play cry"></button>
-                <span class="screen-frame__label">♪ CRY</span>
-                <span class="speaker" aria-hidden="true"></span>
+                <img class="catch-stars" src="assets/catch-stars.svg" alt="" aria-hidden="true">
+                <img class="sparkles" src="assets/sparkles.svg" alt="" aria-hidden="true">
               </div>
             </div>
 
