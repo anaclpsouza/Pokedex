@@ -5,12 +5,15 @@ const ENDPOINTS = {
   pokemon: (idOrName) => `${POKEAPI_BASE_URL}/pokemon/${idOrName}`,
   pokemonList: (limit = 1025) => `${POKEAPI_BASE_URL}/pokemon?limit=${limit}`,
   species: (idOrName) => `${POKEAPI_BASE_URL}/pokemon-species/${idOrName}`,
+  type: (name) => `${POKEAPI_BASE_URL}/type/${name}`,
   evolutionChain: (url) => url
 };
 
 class PokeApiClient {
   constructor() {
     this.pokemonIndex = [];
+    this.pokemonCache = new Map();
+    this.typeCache = new Map();
   }
 
   async fetchJson(url) {
@@ -30,7 +33,31 @@ class PokeApiClient {
   }
 
   async getPokemon(idOrName) {
-    return this.fetchJson(ENDPOINTS.pokemon(idOrName));
+    const key = String(idOrName).toLowerCase();
+    if (this.pokemonCache.has(key)) return this.pokemonCache.get(key);
+
+    const data = await this.fetchJson(ENDPOINTS.pokemon(idOrName));
+    this.pokemonCache.set(key, data);
+    this.pokemonCache.set(String(data.id), data);
+    this.pokemonCache.set(data.name.toLowerCase(), data);
+    return data;
+  }
+
+  async getTypePokemon(typeName) {
+    const type = String(typeName).toLowerCase();
+    if (this.typeCache.has(type)) return this.typeCache.get(type);
+
+    const data = await this.fetchJson(ENDPOINTS.type(type));
+    const ids = new Set();
+    data.pokemon?.forEach((entry) => {
+      const parts = entry.pokemon?.url?.split('/').filter(Boolean);
+      if (parts && parts.length > 0) {
+        const id = parseInt(parts[parts.length - 1], 10);
+        if (id <= 1025) ids.add(id);
+      }
+    });
+    this.typeCache.set(type, ids);
+    return ids;
   }
 
   async getSpecies(idOrName) {
@@ -86,11 +113,3 @@ class PokeApiClient {
 }
 
 const api = new PokeApiClient();
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    ENDPOINTS,
-    PokeApiClient,
-    api
-  };
-}
