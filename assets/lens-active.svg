@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84 84" width="84" height="84">
+  <defs>
+    <radialGradient id="lens-optics-active" cx="35%" cy="32%" r="65%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="25%" stop-color="#e0f7ff"/>
+      <stop offset="50%" stop-color="#80deea"/>
+      <stop offset="75%" stop-color="#00e5ff"/>
+      <stop offset="100%" stop-color="#0091ea"/>
+    </radialGradient>
+    <radialGradient id="lens-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.8"/>
+      <stop offset="70%" stop-color="#00e5ff" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Glow halo -->
+  <circle cx="42" cy="42" r="41" fill="url(#lens-glow)"/>
+  <!-- Rim -->
+  <circle cx="42" cy="42" r="39" fill="#e0e0e0" stroke="#111111" stroke-width="3"/>
+  <!-- Glass bright -->
+  <circle cx="42" cy="42" r="32" fill="url(#lens-optics-active)" stroke="#002f6c" stroke-width="3"/>
+  <!-- Bright highlights -->
+  <ellipse cx="32" cy="28" rx="12" ry="7" fill="rgba(255,255,255,0.95)" transform="rotate(-32 32 28)"/>
+  <circle cx="28" cy="24" r="3.5" fill="#ffffff"/>
+  <circle cx="42" cy="42" r="14" fill="rgba(255,255,255,0.35)"/>
+</svg>
