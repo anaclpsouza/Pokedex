@@ -1,6 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 1140" width="100%" height="100%" preserveAspectRatio="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 1208" width="100%" height="100%" preserveAspectRatio="none">
   <defs>
-    <!-- Gradiente da carcaça vermelha metálica -->
     <linearGradient id="red-m" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#ff4d63"/>
       <stop offset="26%" stop-color="#dc0a2d"/>
@@ -8,7 +7,6 @@
       <stop offset="100%" stop-color="#a3001f"/>
     </linearGradient>
 
-    <!-- Gradiente 3D da dobradiça cilíndrica horizontal -->
     <linearGradient id="hinge-m" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#5c0010"/>
       <stop offset="30%" stop-color="#b50d2a"/>
@@ -17,7 +15,6 @@
       <stop offset="100%" stop-color="#5c0010"/>
     </linearGradient>
 
-    <!-- Gradiente do LED amarelo decorativo -->
     <radialGradient id="led-yellow-m" cx="35%" cy="35%" r="65%">
       <stop offset="0%" stop-color="#ffffff"/>
       <stop offset="25%" stop-color="#ffd53d"/>
@@ -26,31 +23,27 @@
   </defs>
 
   <g id="dex-chassis-mobile">
-    <!-- 1. CORPO SUPERIOR (com entalhe / notch no topo direito) -->
     <g id="shell-top">
-      <path d="M 26 2 L 270 2 L 330 64 L 514 64 A 24 24 0 0 1 538 88 L 538 560 L 2 560 L 2 26 A 24 24 0 0 1 26 2 Z"
+      <path d="M 26 2 L 270 2 L 330 64 L 514 64 A 24 24 0 0 1 538 88 L 538 640 L 2 640 L 2 26 A 24 24 0 0 1 26 2 Z"
             fill="url(#red-m)" stroke="#000000" stroke-width="4" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
-      <path d="M 27 6 L 268 6 L 328 68 L 510 68 A 20 20 0 0 1 534 90 L 534 556 L 6 556 L 6 27 A 20 20 0 0 1 27 6 Z"
+      <path d="M 27 6 L 268 6 L 328 68 L 510 68 A 20 20 0 0 1 534 90 L 534 636 L 6 636 L 6 27 A 20 20 0 0 1 27 6 Z"
             fill="none" stroke="#ffffff" stroke-width="2" stroke-opacity="0.25" vector-effect="non-scaling-stroke"/>
     </g>
 
-    <!-- 2. DOBRADIÇA CENTRAL HORIZONTAL -->
     <g id="shell-hinge-mobile">
-      <rect x="2" y="560" width="536" height="28" fill="url(#hinge-m)" stroke="#000000" stroke-width="4" vector-effect="non-scaling-stroke"/>
-      <line x1="120" y1="560" x2="120" y2="588" stroke="#000000" stroke-width="4" vector-effect="non-scaling-stroke"/>
-      <line x1="270" y1="560" x2="270" y2="588" stroke="#000000" stroke-width="4" vector-effect="non-scaling-stroke"/>
-      <line x1="420" y1="560" x2="420" y2="588" stroke="#000000" stroke-width="4" vector-effect="non-scaling-stroke"/>
+      <rect x="2" y="640" width="536" height="28" fill="url(#hinge-m)" stroke="#000000" stroke-width="4" vector-effect="non-scaling-stroke"/>
+      <line x1="120" y1="640" x2="120" y2="668" stroke="#000000" stroke-width="4" vector-effect="non-scaling-stroke"/>
+      <line x1="270" y1="640" x2="270" y2="668" stroke="#000000" stroke-width="4" vector-effect="non-scaling-stroke"/>
+      <line x1="420" y1="640" x2="420" y2="668" stroke="#000000" stroke-width="4" vector-effect="non-scaling-stroke"/>
     </g>
 
-    <!-- 3. CORPO INFERIOR -->
     <g id="shell-bottom">
-      <path d="M 2 588 L 538 588 L 538 1114 A 24 24 0 0 1 514 1138 L 26 1138 A 24 24 0 0 1 2 1114 Z"
+      <path d="M 2 668 L 538 668 L 538 1182 A 24 24 0 0 1 514 1206 L 26 1206 A 24 24 0 0 1 2 1182 Z"
             fill="url(#red-m)" stroke="#000000" stroke-width="4" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
-      <path d="M 6 592 L 534 592 L 534 1112 A 20 20 0 0 1 512 1134 L 27 1134 A 20 20 0 0 1 6 1112 Z"
+      <path d="M 6 672 L 534 672 L 534 1180 A 20 20 0 0 1 512 1202 L 27 1202 A 20 20 0 0 1 6 1180 Z"
             fill="none" stroke="#ffffff" stroke-width="2" stroke-opacity="0.25" vector-effect="non-scaling-stroke"/>
 
-      <!-- Slots Decorativos Inferiores e LED Amarelo Direito -->
-      <g id="svg-bottom-deco" transform="translate(350, 1106)">
+      <g id="svg-bottom-deco" transform="translate(350, 1174)">
         <rect x="0" y="0" width="50" height="10" rx="3" fill="#f4f4f4" stroke="#000" stroke-width="3"/>
         <rect x="60" y="0" width="50" height="10" rx="3" fill="#f4f4f4" stroke="#000" stroke-width="3"/>
         <circle cx="128" cy="5" r="6" fill="url(#led-yellow-m)" stroke="#000" stroke-width="3"/>

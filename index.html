@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,12 +12,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/pokedex.css">
-  <link rel="stylesheet" href="css/explore.css">
 </head>
 <body>
-
-  <!-- ================= TELA ENTRADA ================= -->
-  <div id="boot" class="boot" role="dialog" aria-label="Loading Pokédex" hidden >
+  <div id="boot" class="boot" role="dialog" aria-label="Loading Pokédex" hidden>
     <div class="boot__half boot__half--top"></div>
     <div class="boot__half boot__half--bottom"></div>
     <div class="boot__band"></div>
@@ -37,16 +34,15 @@
   </div>
 
   <div class="app">
-    <!-- ================= HEADER ================= -->
     <header class="topbar">
-      <a class="brand" href="#dex" aria-label="Retro Pokédex - home">
+      <a class="brand" href="index.html" aria-label="Retro Pokédex - home">
         <img src="assets/pokeball.svg" alt="" class="brand__ball" width="42" height="42">
         <span class="brand__title">POKÉDEX<small>RETRO</small></span>
       </a>
 
       <nav class="tabs" role="tablist" aria-label="Sections">
-        <button class="tab is-active" id="tab-dex" data-tab="dex" role="tab" aria-selected="true">POKÉDEX</button>
-        <button class="tab" id="tab-explore" data-tab="explore" role="tab" aria-selected="false">EXPLORE</button>
+        <a class="tab is-active" id="tab-dex" href="index.html" role="tab" aria-selected="true">POKÉDEX</a>
+        <a class="tab" id="tab-explore" href="pages/explore.html" role="tab" aria-selected="false">EXPLORE</a>
       </nav>
 
       <div class="topbar__tools">
@@ -58,12 +54,15 @@
     </header>
 
     <main>
-      <!-- ================= POKÉDEX ================= -->
       <section id="view-dex" class="view" role="tabpanel" aria-labelledby="tab-dex">
         <h1 class="sr-only">Retro Pokédex</h1>
 
         <div class="dex" id="dex">
-          <!-- LEFT HALF -->
+          <div class="dex__chassis" aria-hidden="true">
+            <img src="assets/carcaca.svg" alt="" class="dex__chassis-desktop">
+            <img src="assets/carcaca-mobile.svg" alt="" class="dex__chassis-mobile">
+          </div>
+
           <div class="dex__left">
             <div class="dex__top">
               <img class="lens" id="lens" src="assets/lens.svg" alt="Optical sensor" width="84" height="84">
@@ -86,18 +85,19 @@
                 </div>
 
                 <img src="assets/pokeball.svg" alt="" class="catch-ball" width="42" height="42">
-
                 <img class="catch-stars" src="assets/catch-stars.svg" alt="" aria-hidden="true">
                 <img class="sparkles" src="assets/sparkles.svg" alt="" aria-hidden="true">
               </div>
             </div>
 
             <div class="controls">
-              <button class="round-btn" id="btn-random" aria-label="Random Pokémon" title="Random">?</button>
+              <button class="round-btn" id="btn-random" aria-label="Random Pokémon" title="Random">
+                <img src="assets/botao-aleatorio.svg" alt="?" width="48" height="48">
+              </button>
 
               <div class="pill-btns">
-                <button class="pill pill--red" id="btn-shiny" title="Shiny version">✦ SHINY</button>
-                <button class="pill pill--blue" id="btn-flip" title="View back sprite">↻ FLIP</button>
+                <button class="pill pill--red" id="btn-shiny" title="Shiny version">SHINY</button>
+                <button class="pill pill--blue" id="btn-flip" title="View back sprite">FLIP</button>
               </div>
 
               <div class="dpad" aria-label="Navigation">
@@ -108,6 +108,7 @@
                 <button class="dpad__down" data-step="10" aria-label="Forward 10"></button>
               </div>
             </div>
+
             <form class="search" id="dex-search" autocomplete="off" role="search">
               <label for="dex-input" class="sr-only">Search Pokémon by name or number</label>
               <input id="dex-input" class="lcd-input" type="text" placeholder="NAME OR NO..." spellcheck="false">
@@ -118,7 +119,6 @@
 
           <div class="dex__hinge" aria-hidden="true"></div>
 
-          <!-- RIGHT HALF -->
           <div class="dex__right">
             <div class="lcd">
               <div class="lcd__head">
@@ -145,34 +145,6 @@
           </div>
         </div>
       </section>
-
-      <!-- ================= EXPLORAR ================= -->
-      <section id="view-explore" class="view" role="tabpanel" aria-labelledby="tab-explore" hidden>
-        <div class="section-title">
-          <h2>EXPLORE POKÉMON WORLD</h2>
-          <p>Filter by region, type, or name. Click to open in Pokédex!</p>
-        </div>
-
-        <div class="explore-bar card">
-          <div class="explore-bar__row">
-            <label class="field">
-              <span>REGION</span>
-              <select id="f-gen" class="select-retro"></select>
-            </label>
-            <label class="field field--grow">
-              <span>NAME</span>
-              <input id="f-name" class="lcd-input" type="text" placeholder="FILTER..." spellcheck="false">
-            </label>
-            <span class="explore-count" id="explore-count">—</span>
-          </div>
-          <div class="chips" id="f-types" aria-label="Filter by type"></div>
-        </div>
-
-        <div class="grid" id="explore-grid"></div>
-        <div class="grid-status">
-          <button class="btn-retro" id="explore-more" hidden>LOAD MORE</button>
-        </div>
-      </section>
     </main>
   </div>
 
@@ -180,8 +152,6 @@
 
   <script src="js/utils.js"></script>
   <script src="js/api.js"></script>
-  <script src="js/pokedex.js"></script>
-  <script src="js/explore.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

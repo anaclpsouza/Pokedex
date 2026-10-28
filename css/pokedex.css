@@ -1,0 +1,614 @@
+.dex {
+  width: 100%;
+  max-width: 480px;
+  margin: 16px auto 36px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.dex__chassis {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.dex__chassis-desktop {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.5));
+}
+
+.dex__chassis-mobile {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.5));
+}
+
+.dex__left {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 16px 14px 22px 14px;
+  min-height: 640px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+.dex__top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 84px;
+  margin-bottom: 14px;
+  max-width: 270px;
+}
+
+.lens {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  cursor: pointer;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.35));
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.lens:hover {
+  transform: scale(1.06);
+  filter: drop-shadow(0 0 12px #5aa6ff) brightness(1.15);
+}
+
+.lens:active {
+  transform: scale(0.96);
+}
+
+.leds {
+  width: 78px;
+  height: 24px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
+}
+
+.screen-frame {
+  background: #dedede;
+  border: 4px solid #000;
+  border-radius: 12px 12px 12px 36px;
+  padding: 14px 14px 12px;
+  box-shadow: inset 3px 3px 0 #fff, inset -3px -3px 0 #999, 0 6px 0 rgba(0, 0, 0, 0.35);
+  margin-bottom: 16px;
+}
+
+.screen-frame__dots {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.screen-frame__dots i {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--red);
+  border: 2px solid #000;
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.screen {
+  background: linear-gradient(180deg, #1f223d 0%, #101223 100%);
+  border: 4px solid #000;
+  border-radius: 8px;
+  position: relative;
+  height: 270px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.85);
+}
+
+.screen__sun {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 145px;
+  height: 145px;
+  pointer-events: none;
+  opacity: 0.25;
+}
+
+.screen__platform {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 42px;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.screen__num {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--yellow);
+  text-shadow: 2px 2px 0 #000;
+  z-index: 3;
+}
+
+.screen__badges {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  display: flex;
+  gap: 6px;
+  z-index: 3;
+}
+
+.screen__sprite {
+  width: 155px;
+  height: 155px;
+  object-fit: contain;
+  z-index: 2;
+  position: relative;
+  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.7));
+  transition: transform 0.25s ease;
+}
+
+.screen__sprite:hover {
+  transform: scale(1.08);
+}
+
+.screen__loader {
+  position: absolute;
+  inset: 0;
+  background: rgba(16, 18, 35, 0.8);
+  display: none;
+  place-items: center;
+  z-index: 10;
+}
+
+.screen__loader.is-loading {
+  display: grid;
+}
+
+.screen__loader .spin {
+  animation: spinImg 1.5s linear infinite;
+}
+
+.catch-ball,
+.catch-stars,
+.sparkles {
+  position: absolute;
+  pointer-events: none;
+  display: none;
+}
+
+.catch-ball {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+}
+
+.catch-stars {
+  width: 140px;
+  height: 70px;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 7;
+}
+
+.sparkles {
+  width: 180px;
+  height: 140px;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 7;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.round-btn {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.1s ease, filter 0.1s ease;
+}
+
+.round-btn img {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.round-btn:hover {
+  filter: brightness(1.15);
+}
+
+.round-btn:active {
+  transform: translateY(2px);
+}
+
+.pill-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.pill {
+  font-family: var(--font-pixel);
+  font-size: 8.5px;
+  padding: 8px 12px;
+  border-radius: 14px;
+  border: 3px solid #000;
+  box-shadow: 0 4px 0 #000, inset 1px 1px 0 rgba(255, 255, 255, 0.3);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.pill--red {
+  background: linear-gradient(180deg, var(--red-light) 0%, var(--red) 100%);
+}
+
+.pill--blue {
+  background: linear-gradient(180deg, var(--blue-light) 0%, var(--blue) 100%);
+}
+
+.pill:hover {
+  filter: brightness(1.15);
+}
+
+.pill:active,
+.pill.is-active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #000;
+}
+
+.dpad {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  flex-shrink: 0;
+}
+
+.dpad__img {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.dpad button {
+  position: absolute;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  transition: background 0.1s;
+}
+
+.dpad button:active {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.dpad__up {
+  top: 0;
+  left: 29px;
+  width: 32px;
+  height: 29px;
+}
+
+.dpad__down {
+  bottom: 0;
+  left: 29px;
+  width: 32px;
+  height: 29px;
+}
+
+.dpad__left {
+  top: 29px;
+  left: 0;
+  width: 29px;
+  height: 32px;
+}
+
+.dpad__right {
+  top: 29px;
+  right: 0;
+  width: 29px;
+  height: 32px;
+}
+
+.dex__hinge {
+  background: transparent;
+  border: none;
+  width: 100%;
+  height: 28px;
+  position: relative;
+  z-index: 2;
+}
+
+.dex__right {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 18px 16px 36px 16px;
+  min-height: 540px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  position: relative;
+  z-index: 2;
+}
+
+.lcd {
+  background: var(--lcd-1);
+  border: 4px solid #000;
+  border-radius: 10px;
+  box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.25), 0 5px 0 rgba(0, 0, 0, 0.35);
+  padding: 14px;
+  min-height: 280px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.lcd__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 2px dashed var(--lcd-3);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+#dex-name {
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  color: var(--lcd-4);
+  letter-spacing: 1px;
+}
+
+.lcd__genus {
+  font-family: var(--font-term);
+  font-size: 19px;
+  color: var(--lcd-3);
+  font-weight: bold;
+}
+
+.lcd__body {
+  flex: 1;
+  font-family: var(--font-term);
+  font-size: 20px;
+  line-height: 1.35;
+  color: var(--lcd-4);
+  overflow-y: auto;
+}
+
+.blue-keys {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin: 4px 0;
+}
+
+.blue-key {
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  padding: 11px 2px;
+  background: linear-gradient(180deg, var(--blue-light) 0%, var(--blue) 60%, var(--blue-dark) 100%);
+  color: #fff;
+  border: 3px solid #000;
+  border-radius: 5px;
+  box-shadow: 0 4px 0 #000, inset 1px 1px 0 rgba(255, 255, 255, 0.4);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  white-space: nowrap;
+}
+
+.blue-key:hover {
+  filter: brightness(1.15);
+}
+
+.blue-key:active,
+.blue-key.is-active {
+  background: linear-gradient(180deg, var(--yellow) 0%, var(--yellow-dark) 100%);
+  color: var(--ink);
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #000;
+}
+
+.dex__actions {
+  margin-top: auto;
+  margin-bottom: 38px;
+}
+
+.action--catch {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 18px;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  background: linear-gradient(180deg, #ff4d63 0%, #dc0a2d 100%);
+  color: #fff;
+  border: 3px solid #000;
+  border-radius: 8px;
+  box-shadow: 0 5px 0 #000, inset 1px 1px 0 rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.action--catch:hover {
+  filter: brightness(1.12);
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 #000;
+}
+
+.action--catch:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #000;
+}
+
+.action__ball-img {
+  transition: transform 0.3s ease;
+}
+
+.action--catch:hover .action__ball-img {
+  transform: rotate(180deg);
+}
+
+.panel-block {
+  margin-bottom: 12px;
+}
+
+.panel-desc {
+  margin-bottom: 10px;
+  font-style: italic;
+}
+
+.panel-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dotted var(--lcd-3);
+  padding: 3px 0;
+}
+
+.stat-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  width: 65px;
+  font-family: var(--font-pixel);
+  font-size: 8px;
+}
+
+.stat-bar {
+  flex: 1;
+  height: 10px;
+  background: var(--lcd-2);
+  border: 1px solid var(--lcd-4);
+  position: relative;
+}
+
+.stat-bar__fill {
+  height: 100%;
+  background: var(--lcd-4);
+}
+
+@media (min-width: 920px) {
+  .dex {
+    max-width: 1060px;
+    margin: 28px auto 40px;
+    display: grid;
+    grid-template-columns: minmax(0, 533fr) 34fr minmax(0, 533fr);
+    align-items: stretch;
+    min-height: 620px;
+  }
+
+  .dex__chassis-desktop {
+    display: block;
+  }
+
+  .dex__chassis-mobile {
+    display: none;
+  }
+
+  .dex__left {
+    min-height: 610px;
+    padding: 12px 22px 24px 24px;
+  }
+
+  .dex__top {
+    height: 78px;
+    margin-bottom: 12px;
+    max-width: 250px;
+  }
+
+  .lens {
+    width: 74px;
+    height: 74px;
+  }
+
+  .leds {
+    width: 74px;
+    height: 24px;
+  }
+
+  .screen {
+    height: 246px;
+  }
+
+  .screen__sprite {
+    width: 140px;
+    height: 140px;
+  }
+
+  .dpad {
+    width: 86px;
+    height: 86px;
+  }
+
+  .round-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .dex__hinge {
+    width: 34px;
+    height: 100%;
+  }
+
+  .dex__right {
+    margin-top: 86px;
+    padding: 16px 24px 38px 22px;
+    min-height: calc(610px - 86px);
+  }
+
+  .lcd {
+    min-height: 330px;
+    flex: 1;
+  }
+
+  .dex__actions {
+    margin-top: auto;
+    margin-bottom: 38px;
+  }
+}
