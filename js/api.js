@@ -53,9 +53,6 @@ class PokeApiClient {
     };
   }
 
-  extractCry(pokemon) {
-    return pokemon?.cries?.latest || null;
-  }
 
   extractFlavorText(species) {
     if (!species?.flavor_text_entries) return 'No description available.';
