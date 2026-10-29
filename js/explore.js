@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     grid.innerHTML = '';
 
     if (filteredList.length === 0) {
-      grid.innerHTML = '<p class="empty-msg">NENHUM POKÉMON ENCONTRADO</p>';
+      grid.innerHTML = '<p class="empty-msg">POKÉMON NOT FOUND</p>';
       if (moreBtn) moreBtn.style.display = 'none';
       if (countEl) countEl.textContent = '0 POKÉMON';
       return;

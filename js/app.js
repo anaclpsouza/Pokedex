@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const dexGenus = document.getElementById('dex-genus');
   const dexPanel = document.getElementById('dex-panel');
   const loader = document.querySelector('.screen__loader');
+  const toast = document.getElementById('toast');
 
   const lens = document.getElementById('lens');
   const leds = document.getElementById('leds');
@@ -18,12 +19,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const dexInput = document.getElementById('dex-input');
   const dpadButtons = document.querySelectorAll('.dpad button');
 
+  const TOTAL_POKEMON = 1025;
   let currentPokemon = null;
   let currentSpecies = null;
   let currentEvolution = null;
   let currentPanel = 'info';
   let isShiny = false;
   let isBack = false;
+
+  function showToast(msg) {
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('is-show');
+    setTimeout(() => toast.classList.remove('is-show'), 2500);
+  }
 
   function piscarLuzes() {
     if (lens) lens.src = 'assets/lens-active.svg';
@@ -281,6 +290,12 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
+  function navigate(step) {
+    const currentId = currentPokemon ? currentPokemon.id : 1;
+    let nextId = ((currentId + step - 1 + TOTAL_POKEMON) % TOTAL_POKEMON) + 1;
+    loadPokemon(nextId);
+  }
+
   async function loadPokemon(idOrName) {
     if (loader) loader.classList.add('is-loading');
     piscarLuzes();
@@ -310,8 +325,8 @@ document.addEventListener('DOMContentLoaded', () => {
       updateSprite();
       updateBadges();
       renderCurrentPanel();
-    } catch (err) {
-      console.error('Erro ao carregar Pokémon:', err);
+    } catch {
+      showToast('POKÉMON NOT FOUND!');
     } finally {
       if (loader) loader.classList.remove('is-loading');
     }
@@ -346,20 +361,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (btnRandom) {
     btnRandom.addEventListener('click', () => {
-      piscarLuzes();
+      const randomId = Math.floor(Math.random() * TOTAL_POKEMON) + 1;
+      loadPokemon(randomId);
     });
   }
 
   if (dexSearch && dexInput) {
     dexSearch.addEventListener('submit', (e) => {
       e.preventDefault();
-      piscarLuzes();
+      const val = dexInput.value.trim().toLowerCase();
+      if (val) {
+        loadPokemon(val);
+        dexInput.value = '';
+      }
     });
   }
 
   dpadButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
-      piscarLuzes();
+      const step = parseInt(btn.dataset.step, 10);
+      if (step) navigate(step);
     });
   });
 
