@@ -199,7 +199,7 @@
   z-index: 2;
   position: relative;
   filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.7));
-  transition: transform 0.25s ease;
+  transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
 .screen__sprite:hover {
@@ -223,37 +223,66 @@
   animation: spinImg 1.5s linear infinite;
 }
 
-.catch-ball,
-.catch-stars,
-.sparkles {
-  position: absolute;
-  pointer-events: none;
-  display: none;
-}
-
 .catch-ball {
-  top: 50%;
+  position: absolute;
   left: 50%;
-  transform: translate(-50%, -50%);
+  bottom: 24px;
+  transform: translate(-50%, 0);
   z-index: 6;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .catch-stars {
+  position: absolute;
+  left: 50%;
+  bottom: 60px;
+  transform: translate(-50%, 0);
   width: 140px;
   height: 70px;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   z-index: 7;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .sparkles {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
   width: 180px;
   height: 140px;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   z-index: 7;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.screen.is-catching .screen__sprite {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.screen.is-catching .catch-ball {
+  animation: captureBall 2.2s ease-in-out forwards;
+}
+
+.screen.is-catching .catch-stars {
+  animation: captureStars 0.6s 1.6s forwards;
+}
+
+@keyframes captureBall {
+  0% { opacity: 1; transform: translate(100px, -140px) rotate(0deg); }
+  25% { transform: translate(-50%, 0) rotate(-720deg); }
+  45% { transform: translate(-50%, 0) rotate(-745deg); }
+  65% { transform: translate(-50%, 0) rotate(-695deg); }
+  85% { opacity: 1; transform: translate(-50%, 0) rotate(-720deg); }
+  100% { opacity: 0; transform: translate(-50%, 0) rotate(-720deg); }
+}
+
+@keyframes captureStars {
+  0% { opacity: 0; transform: translate(-50%, 0) scale(0.5); }
+  50% { opacity: 1; transform: translate(-50%, 0) scale(1.1); filter: drop-shadow(0 0 8px #ffe600); }
+  100% { opacity: 0; transform: translate(-50%, 0) scale(1); }
 }
 
 .controls {

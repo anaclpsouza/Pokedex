@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const dexPanel = document.getElementById('dex-panel');
   const loader = document.querySelector('.screen__loader');
   const toast = document.getElementById('toast');
+  const btnCatch = document.getElementById('btn-catch');
 
   const lens = document.getElementById('lens');
   const leds = document.getElementById('leds');
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentPanel = 'info';
   let isShiny = false;
   let isBack = false;
+  let isCatching = false;
 
   function showToast(msg) {
     if (!toast) return;
@@ -363,6 +365,22 @@ document.addEventListener('DOMContentLoaded', () => {
     btnRandom.addEventListener('click', () => {
       const randomId = Math.floor(Math.random() * TOTAL_POKEMON) + 1;
       loadPokemon(randomId);
+    });
+  }
+
+  if (btnCatch) {
+    btnCatch.addEventListener('click', () => {
+      if (!currentPokemon || isCatching) return;
+
+      isCatching = true;
+      dexScreen.classList.add('is-catching');
+      piscarLuzes();
+
+      setTimeout(() => {
+        dexScreen.classList.remove('is-catching');
+        isCatching = false;
+        showToast(`${currentPokemon.name.toUpperCase()} CAPTURED!`);
+      }, 2200);
     });
   }
 
