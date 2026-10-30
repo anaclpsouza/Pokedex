@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     grid.innerHTML = '';
 
     if (filteredList.length === 0) {
-      grid.innerHTML = '<p class="empty-msg">NENHUM POKÉMON ENCONTRADO</p>';
+      grid.innerHTML = '<p class="empty-msg">POKÉMON NOT FOUND</p>';
       if (moreBtn) moreBtn.style.display = 'none';
       if (countEl) countEl.textContent = '0 POKÉMON';
       return;
@@ -89,14 +89,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (moreBtn) {
       if (filteredList.length > PAGE_SIZE) {
         moreBtn.style.display = 'inline-block';
-        moreBtn.textContent = 'CARREGAR MAIS';
+        moreBtn.textContent = 'LOAD MORE POKÉMON';
       } else {
         moreBtn.style.display = 'none';
       }
     }
 
     if (countEl) {
-      countEl.textContent = `${initialBatch.length} DE ${filteredList.length} POKÉMON`;
+      countEl.textContent = `${initialBatch.length} OF ${filteredList.length} POKÉMON`;
     }
   }
 
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const displayedCount = Math.min(end, filteredList.length);
     if (countEl) {
-      countEl.textContent = `${displayedCount} DE ${filteredList.length} POKÉMON`;
+      countEl.textContent = `${displayedCount} OF ${filteredList.length} POKÉMON`;
     }
 
     if (end >= filteredList.length && moreBtn) {
@@ -124,7 +124,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     currentPage = 1;
     let result = allPokemon;
 
-    // Filtro por Região / Geração
     if (selectedGen !== 'all') {
       const gen = GENERATIONS.find((g) => g.id === selectedGen);
       if (gen) {
@@ -132,18 +131,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
 
-    // Filtro por Nome ou Número
     if (searchTerm) {
       result = result.filter((p) => p.name.includes(searchTerm) || String(p.id).includes(searchTerm));
     }
 
-    // Filtro por Tipo
     if (selectedType !== 'all') {
       try {
         const typeIds = await api.getTypePokemon(selectedType);
         result = result.filter((p) => typeIds.has(p.id));
       } catch (err) {
-        console.error('Erro ao filtrar por tipo:', err);
+        console.error('Error filtering by type:', err);
       }
     }
 
@@ -192,12 +189,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   try {
-    if (countEl) countEl.textContent = 'CARREGANDO...';
+    if (countEl) countEl.textContent = 'LOADING...';
     allPokemon = await api.initIndex();
     await applyFilters();
   } catch {
     if (countEl) countEl.textContent = 'OFFLINE';
-    if (grid) grid.innerHTML = '<p class="empty-msg">NÃO FOI POSSÍVEL CONECTAR À POKÉAPI</p>';
+    if (grid) grid.innerHTML = '<p class="empty-msg">COULD NOT CONNECT TO POKÉAPI</p>';
     if (moreBtn) moreBtn.style.display = 'none';
   }
 });
