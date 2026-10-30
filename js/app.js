@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const dexPanel = document.getElementById('dex-panel');
   const loader = document.querySelector('.screen__loader');
   const toast = document.getElementById('toast');
+  const teamEl = document.getElementById('team');
   const btnCatch = document.getElementById('btn-catch');
 
   const lens = document.getElementById('lens');
@@ -21,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const dpadButtons = document.querySelectorAll('.dpad button');
 
   const TOTAL_POKEMON = 1025;
+  const team = JSON.parse(localStorage.getItem('team') || '[]');
   let currentPokemon = null;
   let currentSpecies = null;
   let currentEvolution = null;
@@ -44,6 +46,32 @@ document.addEventListener('DOMContentLoaded', () => {
       if (lens) lens.src = 'assets/lens.svg';
       if (leds) leds.src = 'assets/leds.svg';
     }, 350);
+  }
+
+  function renderTeam() {
+    if (!teamEl) return;
+    teamEl.innerHTML = '';
+    for (let i = 0; i < 6; i++) {
+      const p = team[i];
+      const slot = document.createElement('div');
+      slot.className = `team__slot ${p ? 'is-filled' : ''}`;
+      if (p) {
+        slot.innerHTML = `
+          <div class="team__open" title="${formatName(p.name)}">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.id}.png" alt="${p.name}">
+          </div>
+          <button class="team__x" title="Release">×</button>
+        `;
+        slot.querySelector('.team__open').addEventListener('click', () => loadPokemon(p.id));
+        slot.querySelector('.team__x').addEventListener('click', (e) => {
+          e.stopPropagation();
+          team.splice(i, 1);
+          localStorage.setItem('team', JSON.stringify(team));
+          renderTeam();
+        });
+      }
+      teamEl.appendChild(slot);
+    }
   }
 
   function updateSprite() {
@@ -372,6 +400,15 @@ document.addEventListener('DOMContentLoaded', () => {
     btnCatch.addEventListener('click', () => {
       if (!currentPokemon || isCatching) return;
 
+      if (team.some((p) => p.id === currentPokemon.id)) {
+        showToast('ALREADY IN PARTY!');
+        return;
+      }
+      if (team.length >= 6) {
+        showToast('PARTY IS FULL!');
+        return;
+      }
+
       isCatching = true;
       dexScreen.classList.add('is-catching');
       piscarLuzes();
@@ -379,6 +416,9 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         dexScreen.classList.remove('is-catching');
         isCatching = false;
+        team.push({ id: currentPokemon.id, name: currentPokemon.name });
+        localStorage.setItem('team', JSON.stringify(team));
+        renderTeam();
         showToast(`${currentPokemon.name.toUpperCase()} CAPTURED!`);
       }, 2200);
     });
@@ -401,6 +441,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (step) navigate(step);
     });
   });
+
+  renderTeam();
 
   const params = new URLSearchParams(window.location.search);
   const initialId = params.get('id') || 25;
